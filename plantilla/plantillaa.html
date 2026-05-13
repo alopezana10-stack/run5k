@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>EcoRun 5K | Carrera por el Día Mundial del Ambiente</title>
+    
+    <!-- Tipografías de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --glass-bg: rgba(15, 30, 20, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-blur: blur(16px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            background-color: #0b2f1f;
+            /* Fondo original del usuario */
+            background-image: url('image_3861b6.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* ----- ANIMACIONES GLOBALES ----- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.9); }
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes zoomPan {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Partículas animadas de fondo */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            color: rgba(16, 185, 129, 0.4);
+            font-size: 1.8rem;
+            bottom: -50px;
+            animation: floatParticle 10s linear infinite;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(4, 20, 10, 0.6) 0%, rgba(4, 20, 10, 0.95) 100%);
+            z-index: 0;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            padding: 20px 20px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Staggered Entrance Animations */
+        .app-container > * {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+        .app-container > :nth-child(1) { animation-delay: 0.1s; }
+        .app-container > :nth-child(2) { animation-delay: 0.2s; }
+        .app-container > :nth-child(3) { animation-delay: 0.3s; }
+        .app-container > :nth-child(4) { animation-delay: 0.5s; }
+        .app-container > :nth-child(5) { animation-delay: 0.7s; }
+        .app-container > :nth-child(6) { animation-delay: 0.9s; }
+
+        /* Logos Header */
+        .organizers-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            margin-bottom: -5px;
+            backdrop-filter: blur(10px);
+        }
+        .organizers-container img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+        }
+
+        .glass-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        /* Hero Image Principal */
+        .hero-banner-container {
+            border-radius: 24px;
+            overflow: hidden;
+            height: 180px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+        }
+        .hero-banner-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: zoomPan 20s infinite alternate linear;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, #0b2f1f 5%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Cabecera / Hero Text */
+        .hero-overlay h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem; font-weight: 900; text-transform: uppercase;
+            line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 4px;
+            background: linear-gradient(to right, #ffffff, #a7f3d0);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .hero-overlay p {
+            color: var(--primary); font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; font-size: 0.9rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .event-details {
+            display: flex; justify-content: center; align-items: center; gap: 14px;
+            flex-wrap: wrap; /* Para pantallas pequeñas */
+            font-size: 0.85rem; font-weight: 600; color: #fff;
+            background: rgba(16, 185, 129, 0.2);
+            padding: 10px 16px; border-radius: 100px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin: -10px auto 10px;
+            width: max-content;
+            max-width: 95%;
+            position: relative; z-index: 2;
+        }
+
+        /* Tarjeta de Inscripción Gratuita */
+        .free-card {
+            position: relative;
+            background: linear-gradient(145deg, rgba(11, 47, 31, 0.85), rgba(16, 185, 129, 0.6)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            overflow: hidden;
+            padding: 0; 
+        }
+        
+        .free-card-banner {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .free-card-content {
+            padding: 24px;
+        }
+
+        .badge-free {
+            position: absolute; top: 0; right: 0;
+            background: var(--accent); color: #000;
+            font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.75rem;
+            padding: 8px 20px; border-bottom-left-radius: 16px;
+            animation: pulseGlow 2s infinite;
+            z-index: 10;
+        }
+        .free-card h2 {
+            font-family: 'Montserrat', sans-serif; font-size: 1.3rem;
+            margin-bottom: 20px; color: #fff;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .free-card h2 i {
+            color: var(--primary);
+            animation: float 3s infinite ease-in-out;
+        }
+
+        /* Lógica de Requisitos (Y / O) */
+        .req-container {
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .req-item {
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(0, 0, 0, 0.4); padding: 12px;
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s; cursor: pointer;
+        }
+        .req-item:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: translateX(5px);
+        }
+        .req-item.mandatory {
+            border-color: rgba(16, 185, 129, 0.5);
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(0,0,0,0.4));
+        }
+        
+        /* Miniaturas de imágenes para requisitos */
+        .req-img {
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+        .req-item:hover .req-img { transform: scale(1.1) rotate(3deg); border-color: var(--primary); }
+        
+        .req-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.3; }
+        .req-text strong { display: block; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 2px;}
+        
+        .logical-y {
+            text-align: center; font-family: 'Montserrat', sans-serif;
+            font-weight: 800; font-size: 0.9rem; color: var(--primary);
+            margin: 4px 0; display: flex; align-items: center; gap: 10px;
+        }
+        .logical-y::before, .logical-y::after {
+            content: ''; flex: 1; height: 2px; background: rgba(16, 185, 129, 0.3); border-radius: 2px;
+        }
+
+        .or-group {
+            position: relative; background: rgba(0,0,0,0.2);
+            border-radius: 20px; padding: 12px; border: 1px dashed rgba(16, 185, 129, 0.3);
+        }
+        .logical-o {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--accent); color: #000;
+            width: 28px; height: 28px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.8rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 2;
+        }
+
+        /* Sección de Precios Opcionales */
+        .section-title {
+            text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;
+            margin: 10px 0 5px;
+        }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .price-card {
+            padding: 20px 12px; text-align: center; border-radius: 20px;
+            cursor: pointer; display: flex; flex-direction: column; justify-content: space-between;
+            overflow: hidden; position: relative;
+        }
+        /* Imagen de fondo sutil para las tarjetas de precio */
+        .price-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; opacity: 0.15; z-index: 0;
+            transition: opacity 0.3s;
+        }
+        .price-card:hover::before { opacity: 0.3; }
+        .bg-dorsal::before { background-image: url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=300&h=300&fit=crop'); }
+        .bg-kit::before { background-image: url('https://images.unsplash.com/photo-1513569536033-149eb5643445?w=300&h=300&fit=crop'); }
+
+        .price-content { position: relative; z-index: 1; }
+        .price-icon {
+            font-size: 1.5rem; color: var(--primary); margin-bottom: 8px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .price-card:hover .price-icon { transform: scale(1.3); color: var(--accent); }
+        .price-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; margin-bottom: 4px; }
+        .price-amount {
+            font-family: 'Montserrat', sans-serif; font-size: 1.8rem;
+            font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 6px;
+        }
+        .price-desc { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Botón Principal Animado */
+        .btn-primary {
+            position: relative; overflow: hidden; display: block; width: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: #000; border: none; padding: 18px; border-radius: 100px;
+            font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.1rem;
+            text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin-top: 10px;
+        }
+        .btn-primary::after {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-20deg); animation: shine 3s infinite;
+        }
+        .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 30px rgba(245, 158, 11, 0.6); }
+        .btn-primary:active { transform: translateY(1px); }
+
+        /* Footer */
+        .footer { text-align: center; font-size: 0.75rem; color: var(--text-muted); opacity: 0.8; margin-top: 10px; }
+
+        /* Modales */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(10px);
+            z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.4s ease;
+            display: flex; align-items: flex-end; justify-content: center;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: #112218; width: 100%; max-width: 480px; border-radius: 32px 32px 0 0;
+            padding: 24px; transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1);
+            border-top: 1px solid rgba(16, 185, 129, 0.3); box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+            max-height: 90vh; overflow-y: auto;
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-drag-handle { width: 40px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; margin: 0 auto 20px; }
+        
+        .modal-content h3 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; color: #fff; margin-bottom: 12px; text-align: center; }
+        .modal-content p { color: var(--text-muted); font-size: 0.95rem; text-align: center; margin-bottom: 20px; }
+        
+        .btn-close {
+            width: 100%; background: rgba(255,255,255,0.1); color: #fff; border: none;
+            padding: 16px; border-radius: 100px; font-family: 'Montserrat', sans-serif;
+            font-weight: 700; font-size: 1rem; cursor: pointer; transition: background 0.3s;
+        }
+        .btn-close:hover { background: rgba(255,255,255,0.2); }
+
+        /* Imágenes de Banner en Modales */
+        .banner-modal {
+            width: 100%; height: 140px; object-fit: cover;
+            border-radius: 20px; margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            animation: zoomPan 15s infinite alternate linear;
+        }
+
+        /* Tarjetas de Contacto en Modal */
+        .contact-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+        .contact-card {
+            display: flex; align-items: center; gap: 15px;
+            background: rgba(0, 0, 0, 0.3); padding: 12px 16px;
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        .contact-card:hover {
+            transform: translateY(-3px); background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .contact-avatar {
+            width: 50px; height: 50px; border-radius: 50%; object-fit: cover;
+            border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            /* Animación de flotación suave */
+            animation: float 4s ease-in-out infinite;
+        }
+        .contact-info { flex: 1; text-align: left; }
+        .contact-name { font-family: 'Montserrat', sans-serif; font-weight: 700; color: #fff; font-size: 0.95rem; margin-bottom: 2px; }
+        .contact-number { color: var(--accent); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px; }
+        .btn-call {
+            background: rgba(16, 185, 129, 0.2); color: var(--primary);
+            width: 44px; height: 44px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; text-decoration: none; font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-call:hover {
+            background: var(--primary); color: #fff;
+            transform: scale(1.15) rotate(10deg); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Toast Animado */
+        .toast {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: rgba(16, 185, 129, 0.95); backdrop-filter: blur(10px); color: white;
+            padding: 14px 24px; border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); z-index: 2000;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            display: flex; align-items: center; gap: 10px; width: max-content; max-width: 90%;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast i { font-size: 1.2rem; color: #fff; animation: float 2s infinite; }
+
+        @media (min-width: 481px) {
+            .modal-overlay { align-items: center; }
+            .modal-content { border-radius: 32px; transform: scale(0.95); opacity: 0; }
+            .modal-overlay.active .modal-content { transform: scale(1); opacity: 1; }
+            .modal-drag-handle { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Partículas Animadas en el Fondo -->
+<div class="particles" id="particles"></div>
+
+<div class="bg-overlay"></div>
+
+<div class="app-container">
+
+    <!-- Logos de los Organizadores -->
+    <div class="organizers-container">
+        <img src="1.jpg" alt="Alcaldía Simón Rodríguez" onerror="this.style.display='none';">
+        <img src="2.jpg" alt="DAMEE" onerror="this.style.display='none';">
+    </div>
+    
+    <!-- Hero Header con Imagen Animada -->
+    <div class="hero-banner-container">
+        <!-- Imagen de gente corriendo en un parque/naturaleza -->
+        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&h=300&fit=crop" alt="Personas corriendo en la naturaleza">
+        <div class="hero-overlay">
+            <h1>EcoRun 5K</h1>
+            <p>Día Mundial del Ambiente</p>
+        </div>
+    </div>
+    
+    <div class="event-details">
+        <span><i class="far fa-calendar-alt"></i> 5 de Junio</span>
+        <span><i class="far fa-clock"></i> 6:00 AM</span>
+        <span><i class="fas fa-map-marker-alt"></i> Av. Peñalver</span>
+    </div>
+
+    <!-- Tarjeta de Inscripción Gratuita -->
+    <div class="glass-panel free-card">
+        <div class="badge-free">100% GRATIS</div>
+        
+        <div class="free-card-content">
+            <h2><i class="fas fa-leaf"></i> Inscripción Ecológica</h2>
+            
+            <div class="req-container">
+                <!-- Obligatorio -->
+                <div class="req-item mandatory" onclick="showToast('Reforestaremos tu planta en parques de la ciudad.')">
+                    <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=150&h=150&fit=crop" alt="Planta Ornamental" class="req-img">
+                    <div class="req-text">
+                        <strong>1 Planta Ornamental</strong>
+                        (Requisito obligatorio)
+                    </div>
+                </div>
+
+                <div class="logical-y">Y ADEMÁS (ELIGE UNO)</div>
+
+                <!-- Opciones (O) -->
+                <div class="or-group">
+                    <div class="logical-o">O</div>
+                    
+                    <div class="req-item" style="margin-bottom: 12px;" onclick="showToast('Aceptamos botellas, envases PEAD y bolsas limpias.')">
+                        <img src="https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?w=150&h=150&fit=crop" alt="Botellas de Plástico" class="req-img">
+                        <div class="req-text">
+                            <strong>2 kg de Plásticos</strong>
+                            Cualquier tipo, limpios
+                        </div>
+                    </div>
+                    
+                    <div class="req-item" onclick="showToast('Las tapas serán donadas a fundaciones.')">
+                        <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?w=150&h=150&fit=crop" alt="Tapas plásticas" class="req-img">
+                        <div class="req-text">
+                            <strong>50 Tapas Plásticas</strong>
+                            De refresco o agua
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Precios Opcionales -->
+    <div class="pricing-section">
+        <h3 class="section-title">Opcionales para el corredor</h3>
+        <div class="pricing-grid">
+            <div class="glass-panel price-card bg-dorsal" onclick="openModal('modalDorsal')">
+                <div class="price-content">
+                    <div class="price-icon"><i class="fas fa-id-badge"></i></div>
+                    <div class="price-title">Dorsal Oficial</div>
+                    <div class="price-amount">$5</div>
+                    <div class="price-desc">Número del competidor</div>
+                </div>
+            </div>
+            
+            <div class="glass-panel price-card bg-kit" onclick="openModal('modalKit')">
+                <div class="price-content">
+                    <div class="price-icon"><i class="fas fa-box-open"></i></div>
+                    <div class="price-title">Kit Completo</div>
+                    <div class="price-amount">$10</div>
+                    <div class="price-desc">Ver contenido</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-primary" onclick="openModal('modalInscripcion')">
+        <i class="fas fa-running" style="margin-right: 8px;"></i> ¡Inscribirme Ahora!
+    </button>
+
+    <div class="footer">
+        <!-- Texto removido según indicaciones -->
+    </div>
+
+</div>
+
+<!-- Modales -->
+<div class="modal-overlay" id="modalInscripcion" onclick="closeModalOnOutsideClick(event, 'modalInscripcion')">
+    <div class="modal-content">
+        <div class="modal-drag-handle"></div>
+        <h3>¡Confirma tu lugar! 🌍</h3>
+        
+        <!-- Imagen Banner del Modal (Gente corriendo/naturaleza) -->
+        <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&h=200&fit=crop" alt="Personas apoyando el ambiente" class="banner-modal">
+        
+        <p style="margin-bottom: 20px;">Comunícate con nuestras organizadoras para registrar tu asistencia. (Recuerda llevar tu <strong>planta</strong> y tus <strong>plásticos/tapas</strong>).</p>
+        
+        <!-- Lista de Contactos (Avatares Genéricos UI-Avatars) -->
+        <div class="contact-list">
+            <div class="contact-card">
+                <!-- Avatar genérico AC -->
+                <img src="https://ui-avatars.com/api/?name=AC&background=059669&color=fff&size=150&font-size=0.4&bold=true" alt="Angélica Caña Avatar" class="contact-avatar">
+                <div class="contact-info">
+                    <div class="contact-name">Angélica Caña</div>
+                    <div class="contact-number">0412-1913265</div>
+                </div>
+                <a href="tel:04121913265" class="btn-call" onclick="showToast('Iniciando llamada a Angélica...')">
+                    <i class="fas fa-phone"></i>
+                </a>
+            </div>
+            
+            <div class="contact-card">
+                <!-- Avatar genérico AQ -->
+                <img src="https://ui-avatars.com/api/?name=AQ&background=059669&color=fff&size=150&font-size=0.4&bold=true" alt="Analis Quijada Avatar" class="contact-avatar">
+                <div class="contact-info">
+                    <div class="contact-name">Analis Quijada</div>
+                    <div class="contact-number">0414-2253787</div>
+                </div>
+                <a href="tel:04142253787" class="btn-call" onclick="showToast('Iniciando llamada a Analis...')">
+                    <i class="fas fa-phone"></i>
+                </a>
+            </div>
+        </div>
+        
+        <button class="btn-close" onclick="closeModal('modalInscripcion')">Volver</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modalDorsal" onclick="closeModalOnOutsideClick(event, 'modalDorsal')">
+    <div class="modal-content">
+        <div class="modal-drag-handle"></div>
+        <!-- Banner Dorsal -->
+        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&h=200&fit=crop" alt="Dorsal de corredor" class="banner-modal">
+        
+        <h3>Dorsal Oficial 🎽</h3>
+        <p>Adquiere tu dorsal para vivir la experiencia de la carrera de manera oficial.</p>
+        <ul style="list-style: none; padding: 0; margin-bottom: 20px; color: var(--text-muted); font-size: 0.95rem;">
+            <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 8px;"></i> <strong>Dorsal impreso</strong> resistente</li>
+            <li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 8px;"></i> <strong>Número oficial</strong> de competidor / caminante</li>
+        </ul>
+        <button class="btn-close" onclick="closeModal('modalDorsal')">Cerrar</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modalKit" onclick="closeModalOnOutsideClick(event, 'modalKit')">
+    <div class="modal-content">
+        <div class="modal-drag-handle"></div>
+        <!-- Banner Kit -->
+        <img src="https://images.unsplash.com/photo-1513569536033-149eb5643445?w=600&h=200&fit=crop" alt="Kit deportivo" class="banner-modal">
+        
+        <h3>Kit de Participación 🎁</h3>
+        <p>El pack completo para disfrutar al máximo el recorrido y llevarte un gran recuerdo. (No incluye dorsal).</p>
+        <ul style="list-style: none; padding: 0; margin-bottom: 20px; color: var(--text-muted); font-size: 0.95rem;">
+            <li style="margin-bottom: 10px;"><i class="fas fa-tshirt" style="color: var(--primary); margin-right: 8px;"></i> <strong>Franelilla</strong> conmemorativa</li>
+            <li style="margin-bottom: 10px;"><i class="fas fa-medal" style="color: var(--primary); margin-right: 8px;"></i> <strong>Medalla</strong></li>
+            <li><i class="fas fa-apple-alt" style="color: var(--primary); margin-right: 8px;"></i> <strong>Kit de hidratación o snack</strong></li>
+        </ul>
+        <button class="btn-close" onclick="closeModal('modalKit')">Cerrar</button>
+    </div>
+</div>
+
+<!-- Toast Notificaciones -->
+<div id="toast" class="toast">
+    <i class="fas fa-leaf"></i>
+    <span id="toast-msg">Mensaje</span>
+</div>
+
+<script>
+    // Generador de Partículas de Fondo (Hojas animadas)
+    function createParticles() {
+        const container = document.getElementById('particles');
+        const icons = ['🌿', '🍃', '🌱'];
+        for(let i=0; i<15; i++) {
+            let particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.innerText = icons[Math.floor(Math.random() * icons.length)];
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+            particle.style.animationDelay = (Math.random() * 10) + 's';
+            particle.style.fontSize = (Math.random() * 1 + 1.2) + 'rem';
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            container.appendChild(particle);
+        }
+    }
+    createParticles();
+
+    // Gestión de Modales
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+        document.body.style.overflow = 'hidden'; // Evita el scroll del fondo
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function closeModalOnOutsideClick(event, modalId) {
+        if (event.target.id === modalId) closeModal(modalId);
+    }
+
+    // Funcionalidad del Toast Animado
+    let toastTimeout;
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        const msgEl = document.getElementById('toast-msg');
+        msgEl.innerText = message;
+        toast.classList.add('show');
+        
+        // Pequeño efecto de "pop" al icono
+        const icon = toast.querySelector('i');
+        icon.style.transform = 'scale(1.6)';
+        setTimeout(() => icon.style.transform = 'scale(1)', 250);
+
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3500);
+    }
+</script>
+
+</body>
+</html>
